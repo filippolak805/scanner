@@ -22,3 +22,14 @@ jobs:
         run: python scanner.py
         env:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
+          GMAIL_RECIPIENT: ${{ secrets.GMAIL_RECIPIENT }}
+          TARGET: ${{ vars.TARGET }}
+
+      - name: Commit updated date
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add last_date.txt
+          git diff --staged --quiet || git commit -m "update last date"
+          git push
